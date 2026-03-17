@@ -21,7 +21,7 @@ O pipeline abrange desde a ingestão dos dados brutos até a disponibilização 
 * Os dados brutos do MovieLens (arquivos `.csv`) são armazenados em um *bucket* do **Google Cloud Storage (GCS)**, garantindo um repositório centralizado, barato e seguro para os dados originais.
 
 **2. Processamento e Modelagem (Data Warehouse)**
-Toda a transformação e modelagem ocorre dentro do **Google BigQuery** através de scripts SQL, divididos em três subcamadas:
+- Toda a transformação e modelagem ocorre dentro do **Google BigQuery** através de scripts SQL, divididos em três subcamadas:
 * **External Tables:** Mapeamento dos arquivos CSV que estão no GCS, permitindo consultar os dados brutos via SQL sem precisar duplicar o armazenamento logo na entrada.
 * **Clean Data:** Limpeza, tipagem e estruturação dos dados em um *Star Schema*. Criação da tabela `dim_movies` e da tabela `fact_ratings`.
 * **Analytical Data:** Construção de *Views* (`vw_movies_kpis`, `vw_ratings_heatmap`, `vw_top_movies`, `vw_scatter_populatiry_vs_quality`, `vw_user_activity`, `vw_genre_performance`). Essa camada entrega os dados pronto para o consumo de BI, otimizando o custo da *query* e a performance do dashboard.
@@ -68,19 +68,18 @@ O resultado permite analisar o comportamento dos usuários e a performance do ca
 
 ## ⚙️ Como Reproduzir
 **1. Download do dataset**
- ```bash
-# Download do dataset MovieLens em: https://grouplens.org/datasets/movielens/
-```
+[MovieLens] (https://grouplens.org/datasets/movielens/ml_belief_2024/)
 
 **2. Configuração do Google Cloud Platform (GCP)**
 * Crie um projeto no GCP
 * Crie um bucket no Google Cloud Storage (GCS)
 
 **3. Ajuste dos Scripts SQL**
-* Na pasta sql/, abra os arquivos e substitua os placeholders pelo ID do seu projeto GCP e pelo nome do seu bucket no GCS.
+* Na pasta `sql/`, abra os arquivos e substitua os placeholders pelo ID do seu projeto GCP e pelo nome do seu bucket no GCS.
 
 **4. Modelagem no BigQuery**
-* Execute os scripts SQL diretamente na interface do BigQuery seguindo a ordem das pastas: 1. external tables -> 2. clean data -> 3. analytical data.
+* Execute os scripts SQL diretamente na interface do BigQuery seguindo a ordem das pastas: 
+1. external tables -> 2. clean data -> 3. analytical data.
 
 **5. Executando o Metabase via Docker**
 * Gere um arquivo de credenciais do GCP (Application Default Credentials) ou uma Service Account Key e salve na raiz do projeto como gcp-key.json.
